@@ -20,6 +20,7 @@
         <input type="submit" value="etudiants" name="method">
     </form>
     <?php if (isset($students)) { ?>   
+        
         <p>Liste des etudiants:</p> 
         <table border="2" style="margin: 7px;">
             <tr>
