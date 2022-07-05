@@ -4,51 +4,49 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> 
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <title>Gestion Etudiant</title>
 </head>
 <body>
 
     <?php
-    $client = new SoapClient("http://localhost:8020/StudentController?wsdl");
-    
-    $accounts = $client->__soapCall("getStudents", []);
-    if (isset($_POST['method'])) 
-    {
+        $client = new SoapClient("http://localhost:8020/StudentController?wsdl");
         
-        if ($_POST['method'] == "ajouter") 
+        $accounts = $client->__soapCall("getStudents", []);
+        if (isset($_POST['method'])) 
         {
-            $param = new stdClass();
-            $param->lastname = $_POST['nom'];
-            $param->firstname = $_POST['prenom'];
-            var_dump($param);
-            $result = $client->__soapCall("insert", array($param));
-        }
-        elseif ($_POST['method'] == "modifier") 
-        {
-            $param = new stdClass();
-            $param->id = $_POST['id'];
-            $param->lastname = $_POST['nom'];
-            $param->firstname = $_POST['prenom'];
-            var_dump($param);
-            $result = $client->__soapCall("update", array($param));
-        }
-        
-        elseif($_POST['method'] == "supprimer"){
-            $param = new stdClass();
-            $param->id = $_POST['id'];
-            var_dump($param);
-            $resdelete = $client->__soapCall("delete", array($param));
-        }
+            
+            if ($_POST['method'] == "ajouter") 
+            {
+                $param = new stdClass();
+                $param->lastname = $_POST['nom'];
+                $param->firstname = $_POST['prenom'];
+                var_dump($param);
+                $result = $client->__soapCall("insert", array($param));
+            }
+            elseif ($_POST['method'] == "modifier") 
+            {
+                $param = new stdClass();
+                $param->id = $_POST['id'];
+                $param->lastname = $_POST['nom'];
+                $param->firstname = $_POST['prenom'];
+                var_dump($param);
+                $result = $client->__soapCall("update", array($param));
+            }
+            
+            elseif($_POST['method'] == "supprimer"){
+                $param = new stdClass();
+                $param->id = $_POST['id'];
+                var_dump($param);
+                $resdelete = $client->__soapCall("delete", array($param));
+            }
 
-    }
-?>
+        }
+    ?>
 
     <nav class="navbar navbar-light bg-dark">
     <div class="container-fluid">
-        <span class="navbar-brand mb-0 h1" style="color:white">Gestion Etudiant</span>
+        <span class="navbar-brand mb-0 h1 text-center" style="color:white">Gestion Etudiant</span>
     </div>
     </nav>
     <div style="height: 40px">
@@ -95,24 +93,12 @@
                                     <input type="hidden" name="action" value="modifier" />
                                     <input style="background-color: #9fccff" type="submit" value="modifier"/>
                                 </form>
-                                <!-- Supprimer------>
-                                <button href="new.php" type="button">
-                                    supprimer
-                                </button>
+
                                 <form method="post" action=""> 
                                     <input type="hidden" name="id" value="<?php echo $account->id; ?>" />
-                                    <input style="background-color: #9fccff" type="submit" value="supprimer" name="method"/>
+                                    <input style="background-color: red; color:azure" type="submit" value="supprimer" name="method"/>
                                 </form>
                             </td>
-                            <!--
-							<td style="width: 20%;">
-								<input style="background-color: #9fccff" type="submit" value="Modifier" class="table-link">
-									
-                                </input>
-								<input style="background-color: red" type="submit" value="Supprimer" class="table-link" >
-
-                                </input>
-							</td> -->
 						</tr>
 						<?php
                              }
